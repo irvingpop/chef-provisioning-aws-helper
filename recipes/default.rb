@@ -12,7 +12,7 @@ with_chef_local_server :chef_repo_path => node['chef-provisioning-aws']['chef_re
   :cookbook_path => [ node['chef-provisioning-aws']['vendor_cookbooks_path'] ],
   :port => 9010.upto(9999)
 
-with_driver "aws:default:#{node['chef-provisioning-aws']['region']}"
+with_driver "aws::#{node['chef-provisioning-aws']['region']}"
 
 keypair_name  = node['chef-provisioning-aws']['keypair_name']
 key_dir       = Chef::Config.private_key_paths.first
