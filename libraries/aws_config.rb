@@ -83,6 +83,19 @@ module AwsConfigHelper
     end
   end
 
+  def aws_instance_created?(vmname)
+    rest = Chef::ServerAPI.new()
+    begin
+      nodeinfo = rest.get("/nodes/#{vmname}")
+    rescue Net::HTTPServerException
+      # Handle the 404 meaning the machine hasn't been created yet
+      nodeinfo = {'normal' => { 'chef_provisioning' => {} } }
+    end
+    driver_info = nodeinfo['normal']['chef_provisioning']['reference'] || {}
+    return true if driver_info.has_key?('instance_id')
+    false
+  end
+
 end
 
 Chef::Recipe.send(:include, AwsConfigHelper)
