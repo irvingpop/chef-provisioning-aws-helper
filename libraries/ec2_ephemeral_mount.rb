@@ -8,7 +8,7 @@ class Chef
       self.resource_name = :ec2_ephemeral_mount
       actions :create
       default_action :create
-      attribute :mount_point, :kind_of => String, :default => '/data', :name_attribute => true
+      attribute :mount_point, :kind_of => String, :name_attribute => true
     end
   end
 end
@@ -20,7 +20,7 @@ class Chef
     class Ec2EphemeralMount < Chef::Provider::LWRPBase
       use_inline_resources
 
-      provides :resource_name
+      provides :ec2_ephemeral_mount
 
       action :create do
         run_context.include_recipe 'lvm::default'
